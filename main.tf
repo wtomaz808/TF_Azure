@@ -16,13 +16,13 @@ provider "azurerm" {
 
 #Creates resource group
 resource "azurerm_resource_group" "main" {
-  name     = "learn-tf-rg-eastus"
-  location = "eastus"
+  name     = "learn-tf-rg-usgovtexas"
+  location = "usgovtexas"
 }
 
 #Creates virtual network
 resource "azurerm_virtual_network" "main" {
-  name                = "learn-tf-vnet-eastus"
+  name                = "learn-tf-vnet-usgovtexas"
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
   address_space       = ["10.0.0.0/16"]
@@ -30,7 +30,7 @@ resource "azurerm_virtual_network" "main" {
 
 #Create subnet
 resource "azurerm_subnet" "main" {
-  name = "learn-tf-subnet-eastus"
+  name = "learn-tf-subnet-usgovtexas"
   virtual_network_name = azurerm_virtual_network.main.name 
   resource_group_name = azurerm_resource_group.main.name 
   address_prefixes = ["10.0.0.0/24"]
@@ -38,7 +38,7 @@ resource "azurerm_subnet" "main" {
 
 #Creates network interface card (NIC)
 resource "azurerm_network_interface" "internal" {
-  name                = "learn-tf-nic-eastus"
+  name                = "learn-tf-nic-usgovtexas"
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
 
@@ -51,12 +51,12 @@ resource "azurerm_network_interface" "internal" {
 
 #Creates Virtual Machine 
 resource "azurerm_windows_virtual_machine" "main" {
-  name = "learn-tf-vm-eu" 
+  name = "Learning-TF-VM" 
   resource_group_name = azurerm_resource_group.main.name
   location = azurerm_resource_group.main.location 
   size = "Standard_B1s"
-  admin_username = "user.admin" 
-  admin_password = "enter-password-here"
+  admin_username = "azureuser" 
+  admin_password = "!A@S3d4f5g6h7j8k"
 
   network_interface_ids = [
     azurerm_network_interface.internal.id
